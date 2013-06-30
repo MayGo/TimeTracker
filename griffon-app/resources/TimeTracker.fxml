@@ -61,8 +61,16 @@
       <items>
         <AnchorPane prefHeight="130.0" prefWidth="798.0">
           <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="152.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="89.0" />
-            <Rectangle fx:id="timelineSelector" arcHeight="0.0" arcWidth="0.0" fill="#bcff66" height="166.0" layoutX="104.0" layoutY="0.0" opacity="0.36" stroke="#10cc00" strokeType="INSIDE" width="89.0" />
+            <VBox layoutY="0.0" prefHeight="166.0" prefWidth="798.0" spacing="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+              <children>
+                <Pane fx:id="applicationTimeline" prefHeight="50.0" prefWidth="798.0" styleClass="insetGradientBg" />
+                <Pane prefHeight="50.0" prefWidth="798.0" styleClass="insetGradientBg" />
+                <Pane prefHeight="50.0" prefWidth="798.0" styleClass="insetGradientBg" />
+              </children>
+              <padding>
+                <Insets />
+              </padding>
+            </VBox>
           </children>
         </AnchorPane>
         <AnchorPane id="AnchorPane" minHeight="50.0" minWidth="50.0" prefHeight="100.0" prefWidth="160.0">
@@ -70,8 +78,9 @@
             <TableView fx:id="infoTable" minHeight="182.0" minWidth="158.0" prefHeight="198.0" prefWidth="158.0" styleClass="bugsTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn id="nameCol" maxWidth="500.0" minWidth="50.0" prefWidth="109.0" text="App name" fx:id="nameCol" />
-                <TableColumn maxWidth="1300.0" minWidth="130.0" prefWidth="130.0" text="Date" fx:id="dateCreatedCol" />
                 <TableColumn id="titleCol" maxWidth="2500.0" minWidth="157.0" prefWidth="159.0" text="Title" fx:id="titleCol" />
+                <TableColumn maxWidth="1300.0" minWidth="130.0" prefWidth="130.0" text="Date Created" fx:id="dateCreatedCol" />
+                <TableColumn maxWidth="1300.0" minWidth="130.0" prefWidth="130.0" text="Date Updated" fx:id="dateUpdatedCol" />
               </columns>
             </TableView>
           </children>

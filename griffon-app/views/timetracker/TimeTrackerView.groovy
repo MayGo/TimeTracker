@@ -1,6 +1,7 @@
 package timetracker
 
 
+import java.text.SimpleDateFormat
 import javafx.beans.*
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
@@ -26,7 +27,9 @@ application(title: 'TimeTracker', sizeToScene: true, centerOnScreen: true) {
 			"infoTable",
 			"nameCol",
 			"titleCol",
-			"dateCreatedCol"
+			"dateCreatedCol",
+			"dateUpdatedCol",
+			"applicationTimeline"
 		].each{name->
 			this."$name"=fxmlLoader.getNamespace().get(name);
 		}
@@ -35,19 +38,34 @@ application(title: 'TimeTracker', sizeToScene: true, centerOnScreen: true) {
 		nameCol.setCellValueFactory(new PropertyValueFactory<ActiveWindowInfo, String>("name"));
 		titleCol.setCellValueFactory(new PropertyValueFactory<ActiveWindowInfo, String>("title"));
 		dateCreatedCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ActiveWindowInfo, String>, ObservableValue<String>>() {
-
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ActiveWindowInfo, String> param) {
 						// The creation date will never change...
 						ActiveWindowInfo awi = param.getValue();
-
-						return new SimpleStringProperty(awi.dateCreated);
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+						return new SimpleStringProperty(dateFormat.format( awi.dateCreated));
+					}
+				});
+		dateUpdatedCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ActiveWindowInfo, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<ActiveWindowInfo, String> param) {
+						// The creation date will never change...
+						ActiveWindowInfo awi = param.getValue();
+						String formatted=""
+						if(awi.dateUpdated){
+							SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+							formatted=dateFormat.format( awi.dateUpdated)
+						}
+						return new SimpleStringProperty(formatted);
 					}
 				});
 		model.activeWindowInfoList.addListener({
 			infoTable.items.clear()
 			infoTable.items.addAll(model.activeWindowInfoList)
 		} as InvalidationListener)
+
+
+		println applicationTimeline
 	}
 }
 

@@ -175,7 +175,11 @@
 
 /* Root AnchorPane background */
 
-
+/*
 .background {
     -fx-background-color:yellow;
+}*/
+
+.insetGradientBg {
+	-fx-background-color: linear-gradient(to bottom, #3f94ea 2%, #d7e2ed 2%, #e3e5e8 48%, #ffffff 98%, #5ba0e5 98%);
 }
