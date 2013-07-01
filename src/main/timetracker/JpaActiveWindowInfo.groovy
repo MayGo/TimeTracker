@@ -16,7 +16,7 @@ import java.util.jar.Attributes.Name;
 
 @Entity
 @Table(name="ActiveWindowInfo")
-class JpaActiveWindowInfo implements ActiveWindowInfo{
+class JpaActiveWindowInfo implements ActiveWindowInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	Long id

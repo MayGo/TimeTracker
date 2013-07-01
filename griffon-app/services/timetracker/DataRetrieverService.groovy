@@ -10,19 +10,24 @@ class DataRetrieverService {
 		withJpa { String persistenceUnit, EntityManager em ->
 			try{
 				em.getTransaction().begin()
-				Query q = em.createQuery("select p from JpaActiveWindowInfo as p where p.name=:name and p.title=:title");
-				q.setParameter("name", awInfo.name);
-				q.setParameter("title", awInfo.title);
+				Query q = em.createQuery("select p from JpaActiveWindowInfo as p order by p.id desc");
+				q.setMaxResults(1)
+
+				List<ActiveWindowInfo> tmpList=q.resultList//TODO: overwrite awInfo
 				ActiveWindowInfo awInfoTemp
-				try{
-					awInfoTemp=q.singleResult//TODO: overwrite awInfo
-					awInfoTemp.updatedCount++
-					em.merge(awInfoTemp)
-				}catch(NoResultException ex){
-					em.persist(awInfo)
+				if(tmpList){
+					awInfoTemp=tmpList.first()
+					if(awInfoTemp.name == awInfo.name && awInfoTemp.title == awInfo.title)
+						awInfoTemp.updatedCount++
+					else
+						awInfoTemp=null
 				}
-				println awInfoTemp
-				
+
+				if(!awInfoTemp)
+					em.persist(awInfo)
+				else
+					em.merge(awInfoTemp)
+
 				em.getTransaction().commit()
 			}catch(Exception ex){
 				log.error ex.message

@@ -11,5 +11,6 @@ beans = {
    
 	context."component-scan"("annotation-config":"true", "base-package":"timetracker")
 	dataRetrieverTask(timetracker.DataRetrieverService)
+	//timeTrackerControllerTask(timeTrackerControllerClass)
  
 }

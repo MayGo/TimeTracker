@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.swing.table.TableColumn
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Callback;
+import javafx.collections.FXCollections
 
 def fxmlLoader = new FXMLLoader(app.getResourceAsURL('TimeTracker.fxml'))
 def fxmlPane = fxmlLoader.load()
@@ -29,7 +30,8 @@ application(title: 'TimeTracker', sizeToScene: true, centerOnScreen: true) {
 			"titleCol",
 			"dateCreatedCol",
 			"dateUpdatedCol",
-			"applicationTimeline"
+			"appChartLocation"
+			
 		].each{name->
 			this."$name"=fxmlLoader.getNamespace().get(name);
 		}
@@ -42,8 +44,12 @@ application(title: 'TimeTracker', sizeToScene: true, centerOnScreen: true) {
 					public ObservableValue<String> call(CellDataFeatures<ActiveWindowInfo, String> param) {
 						// The creation date will never change...
 						ActiveWindowInfo awi = param.getValue();
-						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-						return new SimpleStringProperty(dateFormat.format( awi.dateCreated));
+						String formatted=""
+						if(awi.dateCreated){
+							SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+							formatted=dateFormat.format( awi.dateCreated)
+						}
+						return new SimpleStringProperty(formatted);
 					}
 				});
 		dateUpdatedCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ActiveWindowInfo, String>, ObservableValue<String>>() {
@@ -63,9 +69,22 @@ application(title: 'TimeTracker', sizeToScene: true, centerOnScreen: true) {
 			infoTable.items.clear()
 			infoTable.items.addAll(model.activeWindowInfoList)
 		} as InvalidationListener)
+		appChart=stackedBarChart(height:100, xAxis: numberAxis(label: ""), yAxis: categoryAxis(label: "",tickMarkVisible:false,tickLabelsVisible:false, categories:["Applications"]),
+		data:[
+			series(name: 'Firefox', data: [
+				[100, "Applications"]
+			]),
+			series(name: 'Firefox222', data: [
+				[110, "Applications"]
+			]),                             
+			series(name: 'Firefox3', data: [
+				[50, "Applications"]
+			])
+		]) {
 
+		}
+		appChartLocation.getChildren().addAll(appChart);
 
-		println applicationTimeline
 	}
 }
 

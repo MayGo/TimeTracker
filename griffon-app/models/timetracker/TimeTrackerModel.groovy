@@ -8,7 +8,11 @@ import javafx.collections.FXCollections
 
 class TimeTrackerModel {
 	
-	List<FxActiveWindowInfo> activeWindowInfoList = FXCollections.observableList([])
+	List<ActiveWindowInfo> activeWindowInfoList = FXCollections.observableList([])
+	List<String> chartCategoriesList = FXCollections.observableList([])
+	
+	
+	//List<String> chartDataList = FXCollections.observableList([])
 
     void mvcGroupInit(Map args) {
     }
